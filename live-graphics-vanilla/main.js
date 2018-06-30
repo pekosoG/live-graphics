@@ -4,7 +4,7 @@ let direction=.1;
 let canvas = document.getElementById('el-canvas');
 //canvas.width=window.innerWidth;
 //canvas.height=window.innerHeight;
-let ctx=canvas.getContext('2d');
+let ctx=canvas.getContext('2d') ;
 
 function loop(){
     zoom+=.01;
