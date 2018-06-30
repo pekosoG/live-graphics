@@ -35,7 +35,6 @@ let drops = () => {
     dropsArray=dropsArray.map((element)=>{
 
         let opacity=((100*element.size)/maxSize).toFixed(0);
-        console.log(element.size,opacity,parseFloat("0."+pad(opacity,2)));
         if(opacity<100){
             ctx.fillStyle='rgba(0,0,255,'+(1-parseFloat("0."+pad(opacity,2)))+")";
             ctx.fillRect(element.origin[0],element.origin[1],2,2);
@@ -53,7 +52,49 @@ let drops = () => {
             element.size+=1;
         return element;
     });
-}
+};
+
+let rainbowDrops = () => {
+    canvas.width=window.innerWidth;
+    canvas.height=window.innerHeight;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if(dropsArray.length==0){
+        for(let x=0;x<100;x++){
+            dropsArray.push({
+                origin:[randomNum(canvas.width),randomNum(canvas.height)],
+                size:randomNum(maxSize),
+                color:[Math.floor(Math.random()*256), Math.floor(Math.random()*256), Math.floor(Math.random()*256)],
+            });
+        }
+    }
+    try{
+        dropsArray=dropsArray.map((element)=>{
+
+            let opacity=((100*element.size)/maxSize).toFixed(0);
+            if(opacity<100){
+                ctx.fillStyle='rgba('+element.color[0]+','+element.color[1]+','+element.color[2]+','+(1-parseFloat("0."+pad(opacity,2)))+")";
+                ctx.fillRect(element.origin[0],element.origin[1],2,2);
+                ctx.strokeStyle='rgba('+element.color[0]+','+element.color[1]+','+element.color[2]+','+(1-parseFloat("0."+pad(opacity,2)))+")";
+                ctx.beginPath();
+                ctx.arc(element.origin[0],element.origin[1],element.size,0, 2 * Math.PI);
+                ctx.stroke();
+            }
+            if(element.size>=maxSize){
+                element.size=1;
+                element.origin[0]=randomNum(canvas.width);
+                element.origin[1]=randomNum(canvas.height);
+                element.color=[Math.floor(Math.random()*256), Math.floor(Math.random()*256), Math.floor(Math.random()*256)];
+            }
+            else 
+                element.size+=1;
+            return element;
+        });
+    }catch(err){
+        dropsArray=[];
+    }
+};
+
+
 
 /*
   This is required for weird animation
@@ -84,6 +125,10 @@ function changeShape(){
         case 68: //D
             animation="drops";
             break;
+        case 82: //R
+            dropsArray=[];
+            animation="rainbow";
+            break;
         case 87: //W
             animation="weird";
             break;
@@ -99,6 +144,8 @@ setInterval(()=>{
         loop=weirdLoop;
     else if(animation==='drops')
         loop=drops;
+    else if(animation==="rainbow")
+        loop=rainbowDrops;
     else
         loop = function(){
             console.log('default');
