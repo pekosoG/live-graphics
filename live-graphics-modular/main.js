@@ -4,7 +4,6 @@ let mainLoop = (()=>{
     let maxTimer=50;
 
     let loadAnimations=()=>{
-
         ['stars','drops'].forEach(element=>{
             var animate=Tarp.require('./'+element);
             animations[element]=animate;
