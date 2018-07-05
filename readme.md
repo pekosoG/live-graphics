@@ -21,5 +21,7 @@ I want to have a JS (Probably React) Front-end what will be rendering an image/g
 No trippy animations yet!!! **BUT** I have been trying to get this working. So far I added 3 different but incomplete implementations. 
 
 **/live-graphics-modular** is by far my favorite at the moment
+
 **/live-graphics-vanilla** is just a very veeeeeery bad implementation of the render cycle and animations, i feel shame that you have to see it.
+
 **/live-graphics** was supposed to be the react implementation, but i dropped it after the modular implementation
